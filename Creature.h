@@ -17,6 +17,8 @@ class Creature {
     unsigned short initiative;
     unsigned short health;
     unsigned short exp;
+    bool morale;
+    bool revival;
 
     bool isCorrectATK(unsigned short a) {return  a <= 10000;};
     bool isCorrectINTV(unsigned short a) {return a <= 100; }
@@ -24,8 +26,7 @@ class Creature {
     bool isCorrectEXP(unsigned short a) {return a >= 1 && a <= 1000;}
     bool isCorrestSPD(unsigned short a) {return a <= 10;};
 public:
-    Creature():name("Nameless"), attack(0), speed(0), initiative(0), health(10), exp(1) {};
-    Creature(const std::string&, unsigned short, unsigned short, unsigned short, unsigned short, unsigned short);
+    explicit Creature(const std::string& s = "Nameless", unsigned short atk = 0, unsigned short spd = 0, unsigned short intv = 0, unsigned short hp = 10, unsigned short exp = 1, bool mrl = true, bool rvl = false);
 
     [[nodiscard]] const std::string& getName () const;
     [[nodiscard]] unsigned short getATK() const {return attack;};
@@ -33,6 +34,17 @@ public:
     [[nodiscard]] unsigned short getHP() const {return health;};
     [[nodiscard]] unsigned short getEXP() const {return exp;};
     [[nodiscard]] unsigned short getSPD() const {return speed;};
+    [[nodiscard]] bool isRevival() const {return revival;};
+    [[nodiscard]] bool isMorale() const {return morale;};
+
+    void setName(const std::string&);
+    void setATK(unsigned short);
+    void setSPD(unsigned short);
+    void setINTV(unsigned short);
+    void setHP(unsigned short);
+    void setEXP(unsigned short);
+    void setRVL(bool a) {revival = a;};
+    void setMRL(bool a) {morale = a;};
 };
 
 

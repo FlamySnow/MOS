@@ -20,11 +20,11 @@ class Creature {
     bool morale;
     bool revival;
 
-    bool isCorrectATK(unsigned short a) {return  a <= 10000;};
-    bool isCorrectINTV(unsigned short a) {return a <= 100; }
-    bool isCorrectHP(unsigned short a) {return a >= 10 && a <= 10000;}
-    bool isCorrectEXP(unsigned short a) {return a >= 1 && a <= 1000;}
-    bool isCorrestSPD(unsigned short a) {return a <= 10;};
+    static bool isCorrectATK(unsigned short a) {return  a <= 10000;};
+    static bool isCorrectINTV(unsigned short a) {return a <= 100; }
+    static bool isCorrectHP(unsigned short a) {return a >= 10 && a <= 10000;}
+    static bool isCorrectEXP(unsigned short a) {return a >= 1 && a <= 1000;}
+    static bool isCorrectSPD(unsigned short a) {return a <= 10;};
 public:
     explicit Creature(const std::string& s = "Nameless", unsigned short atk = 0, unsigned short spd = 0, unsigned short intv = 0, unsigned short hp = 10, unsigned short exp = 1, bool mrl = true, bool rvl = false);
 
@@ -45,6 +45,8 @@ public:
     void setEXP(unsigned short);
     void setRVL(bool a) {revival = a;};
     void setMRL(bool a) {morale = a;};
+
+    friend std::ostream& operator << (std::ostream&, const Creature&);
 };
 
 

@@ -6,30 +6,31 @@
 #define MOS_SQUAD_H
 
 #include "Creature.h"
+#include "STile.h"
 
-class Squad {
+class Squad: STile {
 protected:
     std::string owner;
     const Creature& creature;
-    unsigned short attack;
-    unsigned short defense;
-    unsigned short number;
-    unsigned short dead;
+    int attack;
+    int defense;
+    int number;
+    int dead;
 public:
-    Squad(const std::string&, const Creature&, unsigned short);
-    Squad(const std::string&, const Creature&, unsigned short, unsigned short, unsigned short);
+    Squad(const std::string&, const Creature&, int);
+    Squad(const std::string &ow, const Creature &cr, int def, int num, int d);
 
     const std::string& getName() {return owner;};
     const Creature& getCreature() {return creature;};
-    [[nodiscard]] unsigned short getATK() const {return attack;};
-    [[nodiscard]] unsigned short getNumber() const {return number;};
-    [[nodiscard]] unsigned short getDefense() const {return defense;};
+    [[nodiscard]] int getATK() const {return attack;};
+    [[nodiscard]] int getNumber() const {return number;};
+    [[nodiscard]] int getDefense() const {return defense;};
 
     friend std::ostream& operator << (std::ostream& s, const Squad &sq);
 
-    virtual unsigned short getHurt(unsigned short damage);
+    virtual int getHurt(int damage);
 
-    unsigned short resurrect (unsigned short);
+    int resurrect (int n);
 };
 
 

@@ -30,6 +30,7 @@ public:
     void setEG(unsigned short);
     void setCFF(unsigned short);
 
+    bool operator == (const Skill & sk) const;
     friend std::ostream& operator << (std::ostream&, const Skill&);
 };
 

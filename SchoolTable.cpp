@@ -5,46 +5,46 @@
 #include "SchoolTable.h"
 
 SchoolTable::SchoolTable(const SchoolTable &a) {
-    std::map<const std::string, std::vector<Skill>>::const_iterator  p;
+    Map<std::string, std::list<Skill>>::iterator  p;
     for (p = a.schools.begin(); p != a.schools.end(); ++p) {
-        schools.insert(std::make_pair(p->first, p->second));
+        schools.insert(std::make_pair(p->data.first, p->data.second));
     }
 }
 
 SchoolTable &SchoolTable::operator=(const SchoolTable &a) {
-    std::map<const std::string, std::vector<Skill>>::const_iterator p;
+    Map<std::string, std::list<Skill>>::iterator p;
     if (this != &a) {
         schools.clear();
         for (p = a.schools.begin(); p != a.schools.end(); ++p)
-            schools.insert(std::make_pair(p->first, p->second));
+            schools.insert(std::make_pair(p->data.first, p->data.second));
     }
     return *this;
 }
 
-std::vector<Skill> &SchoolTable::operator[](const std::string & school) {
+const std::list<Skill> &SchoolTable::operator[](const std::string & school) {
     auto p = schools.find(school);
     if (p == schools.end()) {
-        std::vector<Skill> skills;
+        std::list<Skill> skills;
         auto pp = schools.insert(std::make_pair(school, skills));
         if(!pp.second)
             throw std::invalid_argument("Can't insert new item into map!");
         p = pp.first;
     }
-    return p->second;
+    return p->data.second;
 }
 
-const std::vector<Skill> &SchoolTable::operator[](const std::string &s) const {
+const std::list<Skill> &SchoolTable::operator[](const std::string &s) const {
     auto p = schools.find(s);
     if (p == schools.end())
         throw std::invalid_argument("Incorrect index!");
-    return p->second;
+    return p->data.second;
 }
 
 std::ostream &operator<<(std::ostream &s, const SchoolTable &t) {
     s << "School Table" << std::endl;
     for (const auto & school : t.schools) {
-        s << school.first << ":" << std::endl;
-        for (const auto & skill : school.second)
+        s << school.data.first << ":" << std::endl;
+        for (const auto & skill : school.data.second)
             s << skill;
     }
     return s;
@@ -53,7 +53,7 @@ std::ostream &operator<<(std::ostream &s, const SchoolTable &t) {
 void SchoolTable::insertSchool(const std::string & school) {
     auto p = schools.find(school);
     if (p == schools.end()) {
-        std::vector<Skill> skills;
+        std::list<Skill> skills;
         auto pp = schools.insert(std::make_pair(school, skills));
         if(!pp.second)
             throw std::invalid_argument("Can't insert new item into map!");
@@ -71,13 +71,13 @@ bool ConstISchoolTable::operator==(const ConstISchoolTable &it) const {
 }
 
 
-std::pair<const std::string, std::vector<Skill>> &ConstISchoolTable::operator*() {
-    return *cur;
+std::pair<std::string, std::list<Skill>> &ConstISchoolTable::operator*() {
+    return cur->data;
 }
 
 
-std::pair<const std::string, std::vector<Skill>> *ConstISchoolTable::operator->() {
-    return &(*cur);
+std::pair<std::string, std::list<Skill>> *ConstISchoolTable::operator->() {
+    return &(cur->data);
 }
 
 ConstISchoolTable &ConstISchoolTable::operator++() {
@@ -109,7 +109,7 @@ const Creature &SchoolTable::operator ()(const std::string &school, const std::s
     auto p = schools.find(school);
     if (p == schools.end())
         throw std::invalid_argument("There is no such school!");
-    for (const auto& skill : p->second) {
+    for (const auto& skill : p->data.second) {
         if (skill.getName() == sk)
             return skill.creature;
     }
@@ -120,22 +120,33 @@ Creature &SchoolTable::operator()(const std::string & school, const std::string 
     auto p = schools.find(school);
     if (p == schools.end())
         throw std::invalid_argument("There is no such school!");
-    for (auto& skill : p->second) {
+    for (auto& skill : p->data.second) {
         if (skill.getName() == sk)
             return skill.creature;
     }
-    std::vector<Skill> skills;
+    std::list<Skill> skills;
     auto pp = schools.insert(std::make_pair(school, skills));
     if(!pp.second)
         throw std::invalid_argument("Can't insert new item into map!");
     p = pp.first;
-    return p->second[0].creature;
+    return p->data.second.front().creature;
 }
 
-unsigned short SchoolTable::getCreatureNumber(const std::string& school) {
+int SchoolTable::getCreatureNumber(const std::string& school) {
     auto p = schools.find(school);
     if (p == schools.end())
         throw std::invalid_argument("There is no such school!");
-    unsigned short n = p->second.size();
+    int n = p->data.second.size();
     return n;
+}
+
+void SchoolTable::insertSkill(const std::string &school, const Skill& sk) {
+    auto p = schools.find(school);
+    if (p == schools.end())
+        throw std::invalid_argument("There is no such school!");
+    for (const auto &skill : p->data.second) {
+        if (skill == sk)
+            throw std::invalid_argument("There is this skill already!");
+    }
+    schools[school].push_back(sk);
 }

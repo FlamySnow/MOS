@@ -6,25 +6,33 @@
 #define MOS_SUMMONER_H
 
 #include "SchoolTable.h"
+#include "STile.h"
 
-class Summoner {
+class Summoner : STile {
     std::string name;
-    static const unsigned short max_health = 100;
-    unsigned short cur_health;
-    static const unsigned short accumulation = 5;
-    static const unsigned short max_energy = 100;
-    unsigned short cur_exp;
-    unsigned short cur_energy;
-    static const unsigned short attack = 10;
+    static const int max_health = 100;
+    int cur_health;
+    static const int accumulation = 5;
+    static const int max_energy = 100;
+    int cur_exp;
+    int cur_energy;
+    static const int attack = 420;
+
+    Map<std::string, int> knowledge;
 
 public:
-    std::map<std::string, unsigned short> knowledge;
-    explicit Summoner (const std::string& n = "Nameless", unsigned short health = max_health, unsigned short ex = 0, unsigned short energy = 50);
 
-    void accumulate(unsigned short energy);
-    void receiveEXP(unsigned short exp) {cur_exp += exp;};
-    void enhance(const std::string& school, unsigned short exp);
-    void getHurt(unsigned short damage);
+    explicit Summoner (const std::string& n = "Nameless", int health = max_health, int ex = 0, int energy = 50);
+
+    void accumulate();
+    void receiveEXP(int exp);
+    void enhance(const std::string& school, int exp);
+    void getHurt(int damage);
+    [[nodiscard]] int getKD(const std::string& school) const;
+    [[nodiscard]] int getHP() const {return cur_health;};
+    [[nodiscard]] int getEXP() const {return cur_exp;};
+    [[nodiscard]] int getEN() const {return cur_energy;};
+    [[nodiscard]] const std::string& getName() const {return name;};
 
     friend std::ostream& operator << (std::ostream&, const Summoner&);
 };

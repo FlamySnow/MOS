@@ -8,18 +8,18 @@
 #include "Squad.h"
 
 class MoraleSquad: public Squad{
-    short morale;
-    static const unsigned short quota = 5;
+    int morale;
+    static const unsigned int quota = 5;
 
 public:
-    MoraleSquad(const std::string& s, const Creature& c, unsigned short n): Squad(s, c, n), morale(0) {};
-    MoraleSquad(const std::string& s, const Creature& c, unsigned short def, unsigned short num, unsigned short dead, short mrl);
+    MoraleSquad(const std::string& s, const Creature& c, int n): Squad(s, c, n), morale(0) {};
+    MoraleSquad(const std::string& s, const Creature& c, int def, int num, int dead, int mrl);
 
-    short getMorale () {return morale;};
+    int getMorale () {return morale;};
     void increaseMorale();
     void decreaseMorale();
     void balanceMorale();
-    unsigned short getHurt(unsigned short damage) override;
+    int getHurt(int damage) override;
     friend std::ostream& operator << (std::ostream& s, const MoraleSquad& m);
 };
 

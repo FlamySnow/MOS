@@ -4,7 +4,7 @@
 
 #include "MoraleSquad.h"
 
-MoraleSquad::MoraleSquad(const std::string &s, const Creature &c, unsigned short def, unsigned short num, unsigned short dead, short mrl): Squad(s, c, def, num, dead) {
+MoraleSquad::MoraleSquad(const std::string &s, const Creature &c, int def, int num, int dead, int mrl): Squad(s, c, def, num, dead) {
     if (mrl < -100 || mrl > 100)
         throw std::invalid_argument("Incorrect morale!");
     morale = mrl;
@@ -35,7 +35,7 @@ void MoraleSquad::balanceMorale() {
     }
 }
 
-unsigned short MoraleSquad::getHurt(unsigned short damage) {
+int MoraleSquad::getHurt(int damage) {
     unsigned short newnum;
     if (defense - damage <= 0)
         newnum = 0;

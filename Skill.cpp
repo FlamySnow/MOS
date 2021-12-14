@@ -48,3 +48,17 @@ std::ostream &operator<<(std::ostream &s, const Skill& sk) {
     s << "Coefficient of quantity: " << sk.coefficient << std::endl;
     return s;
 }
+
+bool Skill::operator==(const Skill &sk) const {
+    if (sk.getName() != name)
+        return false;
+    if (sk.getKD() != min_knowledge)
+        return false;
+    if (sk.getEG() != energy)
+        return false;
+    if (sk.getCFF() != coefficient)
+        return false;
+    if (sk.creature.getName() != creature.getName())
+        return false;
+    return true;
+}

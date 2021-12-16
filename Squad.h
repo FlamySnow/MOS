@@ -7,8 +7,15 @@
 
 #include "Creature.h"
 #include "STile.h"
+///Описывает отряд, имеет дочерний класс - моральный отряд
 
-class Squad: STile {
+/**
+ * имеет: имя призывателя, которому принадлежит отряд;
+ * значение атаки - складывается из количества существ и их базовой атаки;
+ * значение защиты - складывается из количества существ и их базового здоровья;
+ * число существ в отряде и число умерших существ.
+ **/
+class Squad: public STile {
 protected:
     std::string owner;
     const Creature& creature;
@@ -29,8 +36,9 @@ public:
     friend std::ostream& operator << (std::ostream& s, const Squad &sq);
 
     virtual int getHurt(int damage);
+    int getINTV() override {return creature.getINTV();};
 
-    int resurrect (int n);
+    int resurrect (int n); //< метод, позволяющий воскресить несколько существ, но если существо не воскрешаемо, то будет исключение
 };
 
 

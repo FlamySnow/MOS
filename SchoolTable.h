@@ -8,6 +8,8 @@
 #include "../template/Map.h"
 #include <list>
 
+
+/// итератор таблицы
 class ConstISchoolTable {
     Map<std::string, std::list<Skill>>::iterator cur;
 public:
@@ -24,6 +26,8 @@ public:
     const ConstISchoolTable operator ++(int);
 };
 
+/// Таблица со школами и соответствующими ей навыками, создаётся в начале игры и постоянна для всех её состояний.
+
 class SchoolTable {
     Map<std::string, std::list<Skill>> schools;
 
@@ -32,21 +36,21 @@ public:
     SchoolTable(const SchoolTable&);
 
     SchoolTable& operator = (const SchoolTable &);
-    const std::list<Skill> & operator [] (const std::string&);
-    const std::list<Skill>& operator [] (const std::string&) const;
-    friend std::ostream & operator << (std::ostream&, const SchoolTable&);
+    const std::list<Skill> & operator [] (const std::string&); //< получение списка навыков, список нельзя изменять
+    const std::list<Skill>& operator [] (const std::string&) const;//< почти то же самое
+    friend std::ostream & operator << (std::ostream&, const SchoolTable&); //< перегруженный оператор вывода
 
     friend class ConstISchoolTable;
 
     ConstISchoolTable begin();
     ConstISchoolTable end();
 
-    void insertSchool(const std::string &);
-    void insertSkill(const std::string &school, const Skill& sk);
-    const Creature& operator () (const std::string &, const std::string&) const;
-    Creature& operator () (const std::string &, const std::string&);
-    int getSchoolNumber() {return schools.size();};
-    int getCreatureNumber(const std::string&);
+    void insertSchool(const std::string &);//< вставка школы, фактически появление новой строки в таблице
+    void insertSkill(const std::string &school, const Skill& sk); //< вставка навыка в школу, если школы нет, то вставка не удастся
+    const Creature& operator () (const std::string &, const std::string&) const;//< получение константной ссылки на существо по названиям школы и навыка
+    Creature& operator () (const std::string &, const std::string&);//< то же самое, но ссылка позволяет изменить состояние описателя существа
+    int getSchoolNumber() {return schools.size();}; //< получение количества школ
+    int getCreatureNumber(const std::string&); //< получение количества существ в школе, равно количеству навыков школы
 
 private:
     ConstISchoolTable find(const std::string&);

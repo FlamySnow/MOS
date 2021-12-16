@@ -8,7 +8,16 @@
 #include "SchoolTable.h"
 #include "STile.h"
 
-class Summoner : STile {
+
+/// описатель призывателя
+
+/**
+ * Имеет текущие максимальные здоровье, энергию.
+ * Имеет текущее значение опыта
+ * По идее, чтобы напасть на призывателя, нужно убить все его отряды.
+ * Также существует коэффициент аккумуляции энергии - значение, на которое энергия увеличивается за ход.
+ */
+class Summoner : public STile {
     std::string name;
     static const int max_health = 100;
     int cur_health;
@@ -28,11 +37,13 @@ public:
     void receiveEXP(int exp);
     void enhance(const std::string& school, int exp);
     void getHurt(int damage);
+    /// Получение знания какой-либо школы по её названию
     [[nodiscard]] int getKD(const std::string& school) const;
     [[nodiscard]] int getHP() const {return cur_health;};
     [[nodiscard]] int getEXP() const {return cur_exp;};
     [[nodiscard]] int getEN() const {return cur_energy;};
     [[nodiscard]] const std::string& getName() const {return name;};
+    int getINTV() override {return initiative;};
 
     friend std::ostream& operator << (std::ostream&, const Summoner&);
 };

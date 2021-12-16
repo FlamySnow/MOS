@@ -6,18 +6,19 @@
 #define MOS_SKILL_H
 #include "Creature.h"
 
+/// Описывает навык
 class Skill {
-    std::string name;
-    unsigned short min_knowledge;
-    unsigned short energy;//затрачиваемая энергия
-    unsigned short coefficient;
+    std::string name; //< имя навыка
+    unsigned short min_knowledge; //< минимальное знание школы для применения навыка
+    unsigned short energy;//< затрачиваемая энергия призывателя на применение навыка
+    unsigned short coefficient; //< коэффициент численности от знания школы
 
     static bool isCorrectKD(unsigned short a) {return a >= 1 && a <= 100;};
     static bool isCorrectEG(unsigned short a) {return a >= 1 && a <= 100;};
     static bool isCorrectCFF(unsigned short a) {return a > 0 && a <= 100;};
 public:
     Creature creature;
-
+/// конструктор, принимает на вход все данные-поля класса
     explicit Skill(const std::string& n = "Nameless", unsigned short min = 1, unsigned short enrg = 1, unsigned short cff = 1);
 
     [[nodiscard]] const std::string& getName() const {return name;};

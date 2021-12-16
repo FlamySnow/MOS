@@ -4,7 +4,7 @@
 
 #include "Summoner.h"
 
-Summoner::Summoner(const std::string &n, int health, int ex, int energy) {
+Summoner::Summoner(const std::string &n, int health, int ex, int energy): STile(50, summoner) {
     if (n.empty())
         throw std::invalid_argument("Empty string!");
     if (health < 0 || health > max_health || ex < 0 || energy < 0 || energy > max_energy)

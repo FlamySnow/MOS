@@ -9,16 +9,16 @@
 #include <utility>
 #include <stdexcept>
 #include <iostream>
-
+/// Класс, описывающий существо, которое может состоять в отряде и его основные свойства.
 class Creature {
-    std::string name;
-    unsigned short attack;
-    unsigned short speed;
-    unsigned short initiative;
-    unsigned short health;
-    unsigned short exp;
-    bool morale;
-    bool revival;
+    std::string name; //< имя существа
+    unsigned short attack; //< базовая атака
+    unsigned short speed; //< скорость перемещения по полю
+    unsigned short initiative; //< инициатива определяет скорость хода отряда, состоящего из данного существа
+    unsigned short health; //< базовое здоровье
+    unsigned short exp; //< опыт за убийство существа
+    bool morale; //< является ли существо моральным, в соответствии с этим создаётся либо моральный класс, либо аморальный
+    bool revival; //< могут ли данные существа быть воскрешены
 
     static bool isCorrectATK(unsigned short a) {return  a <= 10000;};
     static bool isCorrectINTV(unsigned short a) {return a <= 100; }
@@ -26,6 +26,7 @@ class Creature {
     static bool isCorrectEXP(unsigned short a) {return a >= 1 && a <= 1000;}
     static bool isCorrectSPD(unsigned short a) {return a <= 10;};
 public:
+    ///конструктор, принимет все параметры-поля класса
     explicit Creature(const std::string& s = "Nameless", unsigned short atk = 0, unsigned short spd = 0, unsigned short intv = 0, unsigned short hp = 10, unsigned short exp = 1, bool mrl = true, bool rvl = false);
 
     [[nodiscard]] const std::string& getName () const;
@@ -45,7 +46,7 @@ public:
     void setEXP(unsigned short);
     void setRVL(bool a) {revival = a;};
     void setMRL(bool a) {morale = a;};
-
+///перегрузка оператора вывода
     friend std::ostream& operator << (std::ostream&, const Creature&);
 };
 

@@ -5,28 +5,20 @@
 #ifndef MOS_TILE_H
 #define MOS_TILE_H
 
-#include <list>
 #include <utility>
 #include "../template/Map.h"
 #include "STile.h"
 
 enum tileType {
-    block,
-    squad
+    block, //< преграда
+    some_squad //< призыватель или отряд
 };
 
-struct Tile {
-    int x;
-    int y;
-    tileType type;
-    STile* squad;
+/// структура клетки с координатами и отрядом/призывателем - указателем.
+typedef struct Tile {
+    std::pair<int, int> point; //< точка
+    tileType type; //< тип клетки
+    STile* squad; //< указатель на отряд или призывателя
 } Tile;
-
-class Tiles {
-    Map<std::pair<int, int>, struct Tile> tiles;
-public:
-
-};
-
 
 #endif //MOS_TILE_H

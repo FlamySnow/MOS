@@ -4,7 +4,7 @@
 
 #include "Squad.h"
 
-Squad::Squad(const std::string &s, const Creature& c , int num): creature(c), dead(0) {
+Squad::Squad(const std::string &s, const Creature& c , int num): creature(c), dead(0), STile(c.getINTV(), squad) {
     if (s.empty())
         owner = "Nameless";
     if (num == 0)
@@ -46,7 +46,7 @@ int Squad::getHurt(int damage) {
     return number;
 }
 
-Squad::Squad(const std::string & ow, const Creature & cr, int def, int num, int d): creature(cr) {
+Squad::Squad(const std::string & ow, const Creature & cr, int def, int num, int d): creature(cr), STile(cr.getINTV(), squad) {
     if (ow.empty())
         throw std::invalid_argument("Empty name of owner!");
     if (def > 0  && num >= 0 && num <= 100 && d >= 0 && d <= 100 && def / cr.getHP() == num) {

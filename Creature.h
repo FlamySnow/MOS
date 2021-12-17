@@ -48,6 +48,7 @@ public:
     void setMRL(bool a) {morale = a;};
 ///перегрузка оператора вывода
     friend std::ostream& operator << (std::ostream&, const Creature&);
+    friend std::istream& operator >> (std::istream&, Creature&);
 };
 
 

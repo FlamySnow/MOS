@@ -41,11 +41,11 @@ void Skill::setCFF(unsigned short a) {
 }
 
 std::ostream &operator<<(std::ostream &s, const Skill& sk) {
-    s << "Skill: " << sk.name << std::endl;
-    s << sk.creature << std::endl;
-    s << "Minimal knowledge: " << sk.min_knowledge << std::endl;
-    s << "Energy: " << sk.energy << std::endl;
-    s << "Coefficient of quantity: " << sk.coefficient << std::endl;
+    s << sk.name << std::endl;
+    s << sk.min_knowledge << std::endl;
+    s << sk.energy << std::endl;
+    s << sk.coefficient << std::endl;
+    s << sk.creature;
     return s;
 }
 
@@ -61,4 +61,13 @@ bool Skill::operator==(const Skill &sk) const {
     if (sk.creature.getName() != creature.getName())
         return false;
     return true;
+}
+
+std::istream &operator>>(std::istream &s, Skill & skill) {
+    s >> skill.name;
+    s >> skill.min_knowledge;
+    s >> skill.energy;
+    s >> skill.coefficient;
+    s >> skill.creature;
+    return s;
 }

@@ -33,6 +33,7 @@ public:
 
     bool operator == (const Skill & sk) const;
     friend std::ostream& operator << (std::ostream&, const Skill&);
+    friend std::istream& operator >> (std::istream& s, Skill &);
 };
 
 

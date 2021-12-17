@@ -12,6 +12,7 @@
 #include <set>
 #include <map>
 #include <fstream>
+#include <random>
 
 /// Класс, отвечающий за описание уровня и его состояние.
 class Landscape {
@@ -29,7 +30,7 @@ public:
     /// таблица школ
     SchoolTable table;
 
-    Landscape(): N(100), M(100), move(0) {};
+    Landscape();
     Landscape(int n, int m, int move);
 /// Adds new squad, throws an exception if squad already exists
 /// Coordinates of s must be set
@@ -43,7 +44,9 @@ public:
     [[nodiscard]] const Tile& getUnit(std::pair<int, int> p) const;
     /// Получение указателя той единицы, которая будет ходить следующей
     STile * getNext();
-    void setType(std::pair<int, int> point);
+    bool setType(std::pair<int, int> point);
+    [[nodiscard]] tileType getType (std::pair<int, int> point) const;
+    friend std::ofstream& operator << (std::ofstream& s, const Landscape & l);
 };
 
 

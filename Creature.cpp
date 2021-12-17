@@ -63,14 +63,26 @@ void Creature::setEXP(unsigned short a) {
 }
 
 std::ostream &operator<<(std::ostream &s, const Creature &c) {
-    s << "Creature: " << c.name << std::endl;
-    s << "Attack: " << c.attack << std::endl;
-    s << "Speed: " << c.speed << std::endl;
-    s << "Initiative: " << c.initiative << std::endl;
-    s << "Health: " << c.health << std::endl;
-    s << "Experience for kill: " << c.exp << std::endl;
-    s << "Morale? " << c.morale << std::endl;
-    s << "Revival? " << c.revival << std::endl;
+    s << c.name << std::endl;
+    s << c.attack << std::endl;
+    s << c.speed << std::endl;
+    s << c.initiative << std::endl;
+    s << c.health << std::endl;
+    s << c.exp << std::endl;
+    s << c.morale << std::endl;
+    s << c.revival << std::endl;
+    return s;
+}
+
+std::istream &operator>>(std::istream &s, Creature &c) {
+    s >> c.name;
+    s >> c.attack;
+    s >> c.speed;
+    s >> c.initiative;
+    s >> c.health;
+    s >> c.exp;
+    s >> c.morale;
+    s >> c.revival;
     return s;
 }
 

@@ -41,7 +41,6 @@ const std::list<Skill> &SchoolTable::operator[](const std::string &s) const {
 }
 
 std::ostream &operator<<(std::ostream &s, const SchoolTable &t) {
-    s << "School Table" << std::endl;
     for (const auto & school : t.schools) {
         s << school.data.first << ":" << std::endl;
         for (const auto & skill : school.data.second)

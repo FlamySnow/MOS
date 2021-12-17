@@ -65,12 +65,49 @@ STile* Landscape::getNext() {
     return *p;
 }
 
-void Landscape::setType(std::pair<int, int> point) {
+bool Landscape::setType(std::pair<int, int> point) {
     if (tiles.find(point) == tiles.end()) {
         tiles[point].type = block;
         tiles[point].squad = nullptr;
         tiles[point].point = point;
+        return true;
     }
     else
-        throw std::invalid_argument("Tile is set by squad.");
+        return false;
+}
+
+Landscape::Landscape(): N(10), M(10), move(0) {
+    unsigned short number_of_blocks = N*M/2;
+    unsigned short x, y;
+    for (int i = 0; i < number_of_blocks; ++i) {
+        x = rand() % N;
+        y = rand() % M;
+        setType({x,y});
+    }
+}
+
+std::ofstream &operator<<(std::ofstream &s, const Landscape &l) {
+    tileType type;
+    for (int i = 0; i < l.N; ++i) {
+        for (int j = 0; j < l.M; ++j) {
+            type = l.getType({i, j});
+            if (type == block)
+                s << "  #   ";
+            if (type == some_squad)
+                s << "  S   ";
+            if (type == nothing)
+                s << "  0   ";
+        }
+        s << std::endl;
+    }
+    return s;
+}
+
+tileType Landscape::getType(std::pair<int, int> point) const {
+    auto p = tiles.find(point);
+    if (p == tiles.end())
+        return nothing;
+    if (p->second.type == some_squad)
+        return some_squad;
+    return block;
 }
